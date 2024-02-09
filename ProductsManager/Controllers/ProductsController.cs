@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ namespace ProductsManager.Controllers
 
 
         // POST: api/Products
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin,User")]
         public async Task<ActionResult<Products>> PostProducts(Products products)
         {
             _context.products.Add(products);
@@ -33,7 +34,7 @@ namespace ProductsManager.Controllers
         }
 
         // GET: api/Products
-        [HttpGet]
+        [HttpGet ("Get All")]
         public async Task<ActionResult<IEnumerable<Products>>> Getproducts()
         {
             return await _context.products.ToListAsync();
@@ -55,7 +56,7 @@ namespace ProductsManager.Controllers
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> PutProducts(int id, Products products)
         {
             if (id != products.Id)
@@ -87,7 +88,7 @@ namespace ProductsManager.Controllers
         
 
         // DELETE: api/Products/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> DeleteProducts(int id)
         {
             var products = await _context.products.FindAsync(id);
