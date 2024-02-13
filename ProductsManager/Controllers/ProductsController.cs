@@ -17,10 +17,14 @@ namespace ProductsManager.Controllers
     {
         private readonly AppDbContext _context;
 
+       
+
         public ProductsController(AppDbContext context)
         {
             _context = context;
         }
+
+      
 
 
         // POST: api/Products
@@ -55,7 +59,6 @@ namespace ProductsManager.Controllers
         }
 
         // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}"), Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> PutProducts(int id, Products products)
         {
